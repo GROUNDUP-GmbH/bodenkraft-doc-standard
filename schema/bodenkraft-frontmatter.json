@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bodenkraft.farm/schemas/bodenkraft-frontmatter.json",
+  "title": "BodenKraft Document Frontmatter",
+  "description": "Schema for the `bodenkraft:` YAML frontmatter block required by the BodenKraft Document Standard. See BODENKRAFT_DOC_STANDARD.md for the full specification.",
+  "type": "object",
+  "required": [
+    "doc_id",
+    "doc_type",
+    "doc_version",
+    "doc_status",
+    "classification",
+    "did"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "doc_id": {
+      "type": "string",
+      "pattern": "^BK-[A-Z]+-[A-Z0-9-]+-\\d{3}$",
+      "description": "Stable unique identifier, format BK-<TYPE>-<TOPIC>-<NNN>. Never reused."
+    },
+    "doc_type": {
+      "type": "string",
+      "enum": [
+        "pdd",
+        "whitepaper",
+        "charter",
+        "contract",
+        "rulebook",
+        "manifest",
+        "pitch",
+        "standard",
+        "monitoring-plan",
+        "annex",
+        "catalog"
+      ]
+    },
+    "doc_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$",
+      "description": "Semantic Versioning; suffix -draft allowed while doc_status is draft."
+    },
+    "doc_status": {
+      "type": "string",
+      "enum": ["draft", "review", "approved", "superseded", "retracted"]
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["Public", "Internal", "Confidential", "Restricted"]
+    },
+    "did": {
+      "type": "string",
+      "pattern": "^did:[a-z0-9]+:[A-Za-z0-9._:-]+$",
+      "description": "W3C DID; canonical method is did:web:bodenkraft.farm:<type>:<id>."
+    },
+    "issuer_did": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "string",
+          "pattern": "^did:[a-z0-9]+:[A-Za-z0-9._:-]+$"
+        }
+      ],
+      "description": "DID of the issuing/signing organisation, e.g. did:web:groundup.farm:issuer:gmbh."
+    },
+    "governs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^BK-[A-Z]+-[A-Z0-9-]+-\\d{3}(@\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?)?$"
+      },
+      "default": []
+    },
+    "superseded_by": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "string",
+          "pattern": "^BK-[A-Z]+-[A-Z0-9-]+-\\d{3}(@\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?)?$"
+        }
+      ],
+      "default": null
+    },
+    "retraction_reason": {
+      "type": "string",
+      "description": "Required when doc_status is retracted."
+    },
+    "methodology": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "version"],
+          "properties": {
+            "name": { "type": "string" },
+            "version": { "type": "string" },
+            "source": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "fact_sources": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["type", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "measurement",
+              "calculation",
+              "literature",
+              "assumption",
+              "inspiration",
+              "dataset"
+            ]
+          },
+          "ref": { "type": "string" },
+          "path": { "type": "string" },
+          "excerpt": { "type": "string" },
+          "commit": { "type": "string" },
+          "rationale": { "type": "string" },
+          "doi": { "type": "string" },
+          "openagdb_id": { "type": "string" }
+        }
+      }
+    },
+    "signatories": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "required": ["name", "role", "date"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "signature_ref": { "type": "string" }
+        }
+      }
+    },
+    "language_variants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+      },
+      "default": []
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "doc_status": { "const": "retracted" } } },
+      "then": { "required": ["retraction_reason"] }
+    },
+    {
+      "if": { "properties": { "doc_status": { "const": "superseded" } } },
+      "then": { "required": ["superseded_by"] }
+    }
+  ]
+}

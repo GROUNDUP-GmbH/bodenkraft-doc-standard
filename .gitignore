@@ -1,0 +1,13 @@
+_site/
+.quarto/
+*.log
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+.DS_Store
+__pycache__/
+node_modules/

@@ -1,0 +1,56 @@
+name: Validate Standard
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-schema:
+    name: JSON Schema self-consistency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Ensure schema is itself a valid JSON Schema
+        run: |
+          ajv compile \
+            --strict=false \
+            -s schema/bodenkraft-frontmatter.json
+
+      - name: Validate the example document's frontmatter
+        run: |
+          python3 .github/workflows/extract_frontmatter.py \
+            examples/minimal-document.qmd > /tmp/example-frontmatter.json
+          ajv validate \
+            --strict=false \
+            -s schema/bodenkraft-frontmatter.json \
+            -d /tmp/example-frontmatter.json
+
+      - name: Validate this standard's own frontmatter
+        run: |
+          python3 .github/workflows/extract_frontmatter.py \
+            BODENKRAFT_DOC_STANDARD.md > /tmp/standard-frontmatter.json
+          ajv validate \
+            --strict=false \
+            -s schema/bodenkraft-frontmatter.json \
+            -d /tmp/standard-frontmatter.json
+
+  lint-lua:
+    name: Lua filter syntax check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua
+        run: sudo apt-get update && sudo apt-get install -y lua5.3
+
+      - name: Syntax check Lua filter
+        run: luac5.3 -p filters/bodenkraft-frontmatter-validate.lua

@@ -1,0 +1,54 @@
+---
+title: "Minimal BodenKraft-compliant Document"
+subtitle: "A starting template"
+author:
+  - name: "Your Name"
+    affiliation: "Your Org"
+date: "2026-04-18"
+lang: en
+
+bodenkraft:
+  doc_id: "BK-EXAMPLE-MINIMAL-001"
+  doc_type: "standard"
+  doc_version: "0.1.0-draft"
+  doc_status: "draft"
+  classification: "Public"
+  did: "did:web:bodenkraft.farm:example:minimal-001"
+  issuer_did: "did:web:groundup.farm:issuer:gmbh"
+  governs: []
+  fact_sources:
+    - type: "inspiration"
+      ref: "BodenKraft Document Standard §3"
+---
+
+## Purpose
+
+This is the smallest valid document under the BodenKraft Document Standard.
+Copy it and adapt the frontmatter fields to start a new document.
+
+## How fact badges look
+
+::: {.fact ref="bodenkraft-doc-standard-v1"}
+Every non-trivial claim should be wrapped in a badge callout and linked
+to an entry in `fact_sources`.
+:::
+
+::: {.measured ref="berend-kft-2021-2023"}
+Example of a measured value from a named instrument or lab.
+:::
+
+::: {.assumption rationale="Example rationale — refine before approving."}
+Example of an assumption that still needs validation.
+:::
+
+::: {.unknown owner="TBD" due="2026-06-30"}
+Example of an open item. Owner and due date are required.
+:::
+
+## Next steps
+
+Edit this file, replace the example text with your content, and render with:
+
+```bash
+quarto render examples/minimal-document.qmd
+```
