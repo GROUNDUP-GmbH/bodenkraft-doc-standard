@@ -36,7 +36,7 @@ This standard defines **how every BodenKraft-compliant document is authored,
 structured, versioned, signed, and published**, so that:
 
 1. **Humans** can read it as a normal Markdown/Quarto document.
-2. **Machines** (AI systems like Jóska, OpenAgDB indexer, CI pipelines, DID
+2. **Machines** (AI systems like JÃ³ska, OpenAgDB indexer, CI pipelines, DID
    resolvers) can parse its metadata, resolve its references, and validate
    its claims programmatically.
 3. **Auditors** (Verra VVB, ICAO CORSIA reviewers, tax authorities,
@@ -51,7 +51,7 @@ data model.
 
 ### 2.1 BodenKraft as a standard
 
-BodenKraft is a **standards framework** — analogous to ISO 9000 or AS 9100.
+BodenKraft is a **standards framework** Â— analogous to ISO 9000 or AS 9100.
 It is **not** a company and **not** a product brand (though "BodenKraft"
 is also used as a trademark for product lines that comply with the
 standard).
@@ -79,7 +79,7 @@ Every document begins with YAML frontmatter containing exactly two sections:
 
 ```yaml
 ---
-# Block A — Quarto standard (drives rendering)
+# Block A Â— Quarto standard (drives rendering)
 title: "Human-readable title"
 subtitle: "Optional subtitle"
 author:
@@ -88,7 +88,7 @@ author:
 date: "YYYY-MM-DD"
 lang: "de" | "en" | "hu" | ...
 
-# Block B — BodenKraft ontology (drives machine consumption)
+# Block B Â— BodenKraft ontology (drives machine consumption)
 bodenkraft:
   doc_id: "BK-<TYPE>-<TOPIC>-<NNN>"
   doc_type: "pdd | whitepaper | charter | contract | rulebook | manifest | pitch | standard | monitoring-plan | annex | catalog"
@@ -112,25 +112,25 @@ bodenkraft:
 
 ## 4. Field Reference
 
-### 4.1 Block A — Quarto Standard
+### 4.1 Block A Â— Quarto Standard
 
 | Field | Required | Notes |
 |-------|:--------:|-------|
 | `title` | ? | Human-readable, sentence case |
 | `subtitle` | ? | Optional one-liner |
 | `author` | ? | Array of objects with `name`, optional `affiliation`, `orcid`, `email` |
-| `date` | ? | ISO 8601 (YYYY-MM-DD) — date of last substantive edit |
-| `lang` | ? | ISO 639-1 code — controls hyphenation, babel, cite style |
+| `date` | ? | ISO 8601 (YYYY-MM-DD) Â— date of last substantive edit |
+| `lang` | ? | ISO 639-1 code Â— controls hyphenation, babel, cite style |
 
-### 4.2 Block B — `bodenkraft:` Ontology
+### 4.2 Block B Â— `bodenkraft:` Ontology
 
 | Field | Required | Purpose |
 |-------|:--------:|---------|
 | `doc_id` | ? | Unique, stable identifier. Format: `BK-<TYPE>-<TOPIC>-<NNN>`. Never reused. |
-| `doc_type` | ? | Controlled vocabulary (see §5.1) |
+| `doc_type` | ? | Controlled vocabulary (see Â§5.1) |
 | `doc_version` | ? | Semantic Versioning. Suffix `-draft` allowed while `doc_status: draft`. |
-| `doc_status` | ? | Lifecycle state (see §5.2) |
-| `classification` | ? | Disclosure level (see §5.3) |
+| `doc_status` | ? | Lifecycle state (see Â§5.2) |
+| `classification` | ? | Disclosure level (see Â§5.3) |
 | `did` | ? | Decentralized Identifier for the document itself. Canonical form: `did:web:bodenkraft.farm:<type>:<id>`. |
 | `issuer_did` | ? | DID of the organisation that issues/signs this document. Defaults to Ground UP GmbH when authored under Ground UP. Example: `did:web:groundup.farm:issuer:gmbh`. |
 | `governs` | ? | List of systems, modules, or processes this document is authoritative for. |
@@ -138,7 +138,7 @@ bodenkraft:
 | `superseded_by` | ? | Set by the successor when this document is superseded. |
 | `retraction_reason` | ?? | Required when `doc_status: retracted`. |
 | `methodology` | ? | Named methodology reference (e.g. VM0042 v2.2). |
-| `fact_sources` | ? | Array of sources the document relies on (see §6). |
+| `fact_sources` | ? | Array of sources the document relies on (see Â§6). |
 | `signatories` | ? | Array of signer objects: `{ name, role, date, signature_ref }`. |
 | `language_variants` | ? | List of other `lang` codes where this document exists as a parallel variant. |
 
@@ -160,7 +160,7 @@ bodenkraft:
 | `annex` | Formal annex to another document |
 | `catalog` | Auto-generated catalog derived from structured data (e.g. OpenAgDB) |
 
-### 5.2 `doc_status` — Document Lifecycle
+### 5.2 `doc_status` Â— Document Lifecycle
 
 ```
 draft  ???  review  ???  approved  ???  superseded
@@ -184,16 +184,16 @@ draft  ???  review  ???  approved  ???  superseded
 | `Confidential` | Specific named recipients only | Named-access share, encrypted |
 | `Restricted` | Requires NDA + specific authorisation | Out-of-band, tracked chain of custody |
 
-## 6. `fact_sources` — Source Schema
+## 6. `fact_sources` Â— Source Schema
 
 Every non-trivial claim in a document should be backed by an entry here:
 
 ```yaml
 fact_sources:
   - type: "standard"
-    ref: "VM0042 v2.2 §8.1.2"
+    ref: "VM0042 v2.2 Â§8.1.2"
     path: "external/verra/VM0042v2.2.pdf"
-    excerpt: "SOC_stock = SOC_conc × BD × depth ..."
+    excerpt: "SOC_stock = SOC_conc Ã— BD Ã— depth ..."
   - type: "measurement"
     ref: "Berend Kft 2021-2023 SOC sampling campaign"
     path: "data/measurements/berend_kft/soc_2021_2023.parquet"
@@ -229,8 +229,8 @@ must be badged**. The badges are machine-parseable and tie back to
 | `::: {.fact ref="..."}` | ? FAKT | Established fact from a standard document |
 | `::: {.measured ref="..."}` | ? GEMESSEN | Measured value from an identified instrument / lab |
 | `::: {.calculated ref="..."}` | ? BERECHNET | Computed via a named formula with named inputs |
-| `::: {.assumption rationale="..."}` | ?? ANNAHME | Assumed value — must include rationale |
-| `::: {.unknown owner="..." due="..."}` | ? UNBEKANNT | Gap — must include resolver and deadline |
+| `::: {.assumption rationale="..."}` | ?? ANNAHME | Assumed value Â— must include rationale |
+| `::: {.unknown owner="..." due="..."}` | ? UNBEKANNT | Gap Â— must include resolver and deadline |
 
 Example:
 
@@ -271,14 +271,14 @@ docs/
 ## 9. Versioning Rules
 
 - Follow **Semantic Versioning** (SemVer 2.0.0) for `doc_version`.
-  - **MAJOR**: Breaking change — invalidates prior audits or citations.
+  - **MAJOR**: Breaking change Â— invalidates prior audits or citations.
   - **MINOR**: Substantive content addition, no breakage.
   - **PATCH**: Typos, clarifications, formatting.
 - A `doc_status: approved` document **must not** be edited in place. Any
   change creates a new version; the prior version is archived with
   `superseded_by` pointing to the new `doc_id@version`.
 - Git commits that modify an `approved` document must reference the
-  approving signatory decision (e.g. `Ref: DEC-2026-042 — CFO approval`).
+  approving signatory decision (e.g. `Ref: DEC-2026-042 Â— CFO approval`).
 
 ## 10. DID & Signature Architecture
 
@@ -321,15 +321,15 @@ A build **fails** if:
 
 Every rendered HTML page emits a JSON-LD block in its `<head>` exposing
 the `bodenkraft:` metadata plus resolved DIDs and section hashes. This
-enables AI systems (such as Jóska) to:
+enables AI systems (such as JÃ³ska) to:
 
-1. **Index by metadata** — retrieval by `doc_id`, `doc_type`, `governs`,
-   `methodology` — not by raw full-text.
-2. **Cite with integrity** — when an AI cites a fact, it references the
+1. **Index by metadata** Â— retrieval by `doc_id`, `doc_type`, `governs`,
+   `methodology` Â— not by raw full-text.
+2. **Cite with integrity** Â— when an AI cites a fact, it references the
    `doc_id@version` and the `fact_sources` entry, not a URL.
-3. **Detect staleness** — refuse to quote from a document whose
+3. **Detect staleness** Â— refuse to quote from a document whose
    `doc_status` is `superseded` or `retracted`, warn the user.
-4. **Replay audits** — every AI response can be replayed by resolving
+4. **Replay audits** Â— every AI response can be replayed by resolving
    cited `doc_id@version` from the git history.
 
 ## 13. Relationship to Existing Documents
@@ -346,13 +346,13 @@ Migration paths for Ground UP legacy documents:
 
 ## 14. Open Items
 
-::: {.unknown owner="Stefan Fölser" due="2026-05-01"}
+::: {.unknown owner="Stefan FÃ¶lser" due="2026-05-01"}
 Final decision on DID method for anchoring (`did:web` vs `did:key` vs
 custom RDDL method) and signing-key custody (HSM, cloud KMS, or
 hardware-embedded secure element).
 :::
 
-::: {.unknown owner="Stefan Fölser" due="2026-05-15"}
+::: {.unknown owner="Stefan FÃ¶lser" due="2026-05-15"}
 Domain registration of `bodenkraft.farm` and `groundup.farm` DID webroots
 (`.well-known/did.json`).
 :::
@@ -361,4 +361,4 @@ Domain registration of `bodenkraft.farm` and `groundup.farm` DID webroots
 
 | Version | Date | Change |
 |---------|------|--------|
-| 1.0.0-draft | 2026-04-18 | Initial draft — supersedes implicit LaTeX-only conventions in Ground UP legacy repos |
+| 1.0.0-draft | 2026-04-18 | Initial draft Â— supersedes implicit LaTeX-only conventions in Ground UP legacy repos |

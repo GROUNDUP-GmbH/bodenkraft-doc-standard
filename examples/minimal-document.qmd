@@ -18,7 +18,7 @@ bodenkraft:
   governs: []
   fact_sources:
     - type: "inspiration"
-      ref: "BodenKraft Document Standard §3"
+      ref: "BodenKraft Document Standard, Chapter 3"
 ---
 
 ## Purpose
@@ -37,7 +37,7 @@ to an entry in `fact_sources`.
 Example of a measured value from a named instrument or lab.
 :::
 
-::: {.assumption rationale="Example rationale — refine before approving."}
+::: {.assumption rationale="Example rationale - refine before approving."}
 Example of an assumption that still needs validation.
 :::
 

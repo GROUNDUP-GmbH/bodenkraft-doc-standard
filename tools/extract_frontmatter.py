@@ -34,7 +34,15 @@ def main() -> int:
         return 2
 
     path = pathlib.Path(sys.argv[1])
-    text = path.read_text(encoding="utf-8")
+    raw = path.read_bytes()
+    for encoding in ("utf-8", "utf-8-sig", "latin-1"):
+        try:
+            text = raw.decode(encoding)
+            break
+        except UnicodeDecodeError:
+            continue
+    else:
+        text = raw.decode("utf-8", errors="replace")
     match = FRONTMATTER_RE.match(text)
     if not match:
         sys.stderr.write(f"no YAML frontmatter found in {path}\n")
