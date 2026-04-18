@@ -10,7 +10,7 @@
     3. Verifies all fields use values from the controlled vocabularies.
     4. Fails the build with a clear error message if validation fails.
 
-  What this filter does NOT do (yet — see TODO):
+  What this filter does NOT do (yet โ€” see TODO):
     - Full JSON Schema validation (needs an external Lua library or a
       sidecar Python/Node validator).
     - Cross-document reference checking (doc_id collisions, supersedes
@@ -92,7 +92,7 @@ function Meta(meta)
     io.stderr:write(
       "\n[bodenkraft-doc-standard] WARNING: document is missing the " ..
       "`bodenkraft:` frontmatter block. " ..
-      "See BODENKRAFT_DOC_STANDARD.md ง3.\n"
+      "See BODENKRAFT_DOC_STANDARD.md ยง3.\n"
     )
     return nil
   end
@@ -112,7 +112,7 @@ function Meta(meta)
   local doc_type = meta_to_string(bk.doc_type)
   if not DOC_TYPES[doc_type] then
     fail("`bodenkraft.doc_type` = '" .. doc_type ..
-         "' is not a recognised value. See ง5.1.")
+         "' is not a recognised value. See ยง5.1.")
   end
 
   local doc_version = meta_to_string(bk.doc_version)
@@ -124,13 +124,13 @@ function Meta(meta)
   local doc_status = meta_to_string(bk.doc_status)
   if not DOC_STATUSES[doc_status] then
     fail("`bodenkraft.doc_status` = '" .. doc_status ..
-         "' is not a recognised lifecycle state. See ง5.2.")
+         "' is not a recognised lifecycle state. See ยง5.2.")
   end
 
   local classification = meta_to_string(bk.classification)
   if not CLASSIFICATIONS[classification] then
     fail("`bodenkraft.classification` = '" .. classification ..
-         "' is not a recognised level. See ง5.3.")
+         "' is not a recognised level. See ยง5.3.")
   end
 
   local did = meta_to_string(bk.did)

@@ -2,7 +2,7 @@
 
 > **What this is.** The BodenKraft Document Standard defines how documents
 > across all BodenKraft-compliant organisations are authored, versioned,
-> signed, and published — so that humans can read them, machines (AI systems,
+> signed, and published â€” so that humans can read them, machines (AI systems,
 > indexers, CI) can parse them, and auditors can trace every claim to a
 > source.
 >
@@ -95,4 +95,4 @@ field reference, controlled vocabularies, and lifecycle rules.
 
 ## Contact
 
-Ground UP GmbH · Iglasegasse 21-23, A-1190 Vienna · https://groundup.farm
+Ground UP GmbH Â· Iglasegasse 21-23, A-1190 Vienna Â· https://groundup.farm

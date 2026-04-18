@@ -6,7 +6,7 @@ The project adheres to [Semantic Versioning](https://semver.org/) and
 
 ## [Unreleased]
 
-## [1.0.0-draft] — 2026-04-18
+## [1.0.0-draft] â€” 2026-04-18
 
 ### Added
 - Initial standard specification (`BODENKRAFT_DOC_STANDARD.md`).
