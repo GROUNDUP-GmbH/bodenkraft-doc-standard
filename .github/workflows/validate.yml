@@ -22,7 +22,9 @@ jobs:
       - name: Ensure schema is itself a valid JSON Schema
         run: |
           ajv compile \
+            --spec=draft2020 \
             --strict=false \
+            -c ajv-formats \
             -s schema/bodenkraft-frontmatter.json
 
       - name: Install PyYAML
@@ -33,7 +35,9 @@ jobs:
           python3 tools/extract_frontmatter.py \
             examples/minimal-document.qmd > /tmp/example-frontmatter.json
           ajv validate \
+            --spec=draft2020 \
             --strict=false \
+            -c ajv-formats \
             -s schema/bodenkraft-frontmatter.json \
             -d /tmp/example-frontmatter.json
 
@@ -42,7 +46,9 @@ jobs:
           python3 tools/extract_frontmatter.py \
             BODENKRAFT_DOC_STANDARD.md > /tmp/standard-frontmatter.json
           ajv validate \
+            --spec=draft2020 \
             --strict=false \
+            -c ajv-formats \
             -s schema/bodenkraft-frontmatter.json \
             -d /tmp/standard-frontmatter.json
 
