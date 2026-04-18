@@ -25,9 +25,12 @@ jobs:
             --strict=false \
             -s schema/bodenkraft-frontmatter.json
 
+      - name: Install PyYAML
+        run: pip install pyyaml
+
       - name: Validate the example document's frontmatter
         run: |
-          python3 .github/workflows/extract_frontmatter.py \
+          python3 tools/extract_frontmatter.py \
             examples/minimal-document.qmd > /tmp/example-frontmatter.json
           ajv validate \
             --strict=false \
@@ -36,7 +39,7 @@ jobs:
 
       - name: Validate this standard's own frontmatter
         run: |
-          python3 .github/workflows/extract_frontmatter.py \
+          python3 tools/extract_frontmatter.py \
             BODENKRAFT_DOC_STANDARD.md > /tmp/standard-frontmatter.json
           ajv validate \
             --strict=false \
