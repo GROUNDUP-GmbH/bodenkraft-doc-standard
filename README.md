@@ -29,6 +29,7 @@
 | [`includes/`](./includes/) | Shared LaTeX preamble and SCSS theme for consistent look & feel |
 | [`examples/minimal-document.qmd`](./examples/minimal-document.qmd) | Smallest possible valid document |
 | [`.github/workflows/validate.yml`](./.github/workflows/validate.yml) | CI that validates schema consistency on every push |
+| [`tools/ste100_check.py`](./tools/ste100_check.py) | Mechanical check of the writing language (ASD-STE100, section 14) |
 
 ## How to adopt it in your repo
 
