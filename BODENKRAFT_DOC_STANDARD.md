@@ -10,7 +10,7 @@ lang: en
 bodenkraft:
   doc_id: "BK-STD-DOC-001"
   doc_type: "standard"
-  doc_version: "1.0.0-draft"
+  doc_version: "1.0.1-draft"
   doc_status: "draft"
   classification: "Public"
   did: "did:web:bodenkraft.farm:standard:doc-001"
@@ -92,7 +92,7 @@ lang: "de" | "en" | "hu" | ...
 bodenkraft:
   doc_id: "BK-<TYPE>-<TOPIC>-<NNN>"
   doc_type: "pdd | whitepaper | charter | contract | rulebook | manifest | pitch | standard | monitoring-plan | annex | catalog"
-  doc_version: "SemVer, e.g. 1.2.0 or 0.1.0-draft"
+  doc_version: "SemVer, for example, 1.2.0 or 0.1.0-draft"
   doc_status: "draft | review | approved | superseded | retracted"
   classification: "Public | Internal | Confidential | Restricted"
   did: "did:web:bodenkraft.farm:<type>:<id>"
@@ -137,7 +137,7 @@ bodenkraft:
 | `supersedes` | ? | List of `doc_id@version` values this document replaces. |
 | `superseded_by` | ? | Set by the successor when this document is superseded. |
 | `retraction_reason` | ?? | Required when `doc_status: retracted`. |
-| `methodology` | ? | Named methodology reference (e.g. VM0042 v2.2). |
+| `methodology` | ? | Named methodology reference (for example, VM0042 v2.2). |
 | `fact_sources` | ? | Array of sources the document relies on (see §6). |
 | `signatories` | ? | Array of signer objects: `{ name, role, date, signature_ref }`. |
 | `language_variants` | ? | List of other `lang` codes where this document exists as a parallel variant. |
@@ -150,7 +150,7 @@ bodenkraft:
 |-------|-------------|
 | `pdd` | Project Design Document (Verra VM0042, VT0014) |
 | `whitepaper` | Public-facing strategy / technology whitepaper |
-| `charter` | Foundational governance document (e.g. Tokenomics Charter) |
+| `charter` | Foundational governance document (for example, Tokenomics Charter) |
 | `contract` | Legally binding agreement (farmer contract, CORSIA purchase agreement) |
 | `rulebook` | Internal rules of engagement |
 | `manifest` | Philosophical statement of principles |
@@ -158,7 +158,7 @@ bodenkraft:
 | `standard` | A document defining a standard (like this one) |
 | `monitoring-plan` | Client-specific monitoring configuration per VM0042 |
 | `annex` | Formal annex to another document |
-| `catalog` | Auto-generated catalog derived from structured data (e.g. OpenAgDB) |
+| `catalog` | Auto-generated catalog derived from structured data (for example, OpenAgDB) |
 
 ### 5.2 `doc_status`  Document Lifecycle
 
@@ -266,7 +266,7 @@ docs/
 
 - `doc_id` is the canonical reference. The directory slug is a
   human-friendly alias and may differ.
-- Numbered section files (e.g. `10-front-matter.qmd`) preserve ordering.
+- Numbered section files (for example, `10-front-matter.qmd`) preserve ordering.
 
 ## 9. Versioning Rules
 
@@ -278,7 +278,7 @@ docs/
   change creates a new version; the prior version is archived with
   `superseded_by` pointing to the new `doc_id@version`.
 - Git commits that modify an `approved` document must reference the
-  approving signatory decision (e.g. `Ref: DEC-2026-042  CFO approval`).
+  approving signatory decision (for example, `Ref: DEC-2026-042  CFO approval`).
 
 ## 10. DID & Signature Architecture
 
@@ -292,7 +292,7 @@ docs/
 ### 10.2 Signature chain
 
 1. Document `did` is minted in the standard namespace.
-2. Issuer `issuer_did` signs the document's content hash (e.g. SHA-256 of
+2. Issuer `issuer_did` signs the document's content hash (for example, SHA-256 of
    the rendered canonical form) using a key published at the issuer's
    DID Document.
 3. The signature is stored either in `signatories[].signature_ref` (URI
@@ -300,7 +300,7 @@ docs/
 
 ### 10.3 Multiple issuers over time
 
-A document may later be issued by a different organisation (e.g. a
+A document may later be issued by a different organisation (for example, a
 notified body signs off on a PDD). In that case a new version is
 produced with additional entries in `signatories`.
 
@@ -344,10 +344,61 @@ Migration paths for Ground UP legacy documents:
 | `docs/business_model/RULEBOOK_*.md` | Remain Markdown; add `bodenkraft:` frontmatter. | Non-breaking. |
 | `docs/RULEBOOK_OPENAGDB.md` (OpenAgDB repo) | Same file; add `bodenkraft:` frontmatter. | Cross-repo; same standard. |
 
-## 14. Open Items
+## 14. Writing Language
+
+Documents under this standard use **ASD-STE100 Simplified Technical English**
+(Issue 9, 2025-01-15) as their writing language.
+
+This standard governs the metadata of a document. ASD-STE100 governs the
+sentences. A document can pass the schema check and still fail the reader.
+
+### 14.1 Limits
+
+| Rule | Limit |
+|------|-------|
+| Sentence length in a procedure | 20 words |
+| Sentence length in a description | 25 words |
+| Sentences in a paragraph | 6 |
+| Words in a multi-word noun | 3 |
+| Punctuation | no semicolon |
+| Verb forms | infinitive, imperative, simple present, simple past, simple future, past participle as adjective |
+| Voice | active; passive only in a description, when the agent is unknown |
+| Spelling | American English |
+
+### 14.2 Words
+
+- Use a word that is approved in the ASD-STE100 dictionary, a technical noun or
+  a technical verb.
+- A technical noun comes from the project glossary. Keep it short. Use the same
+  name for the same item in every document.
+- Do not use phrasal verbs, contractions, Latin abbreviations or slang.
+
+### 14.3 Check before you publish
+
+```bash
+python3 tools/ste100_check.py <files or directories> --mode auto
+```
+
+The tool checks the mechanical rules in section 14.1. It does not check the
+dictionary, and it does not replace a reader.
+
+### 14.4 The dictionary
+
+The ASD-STE100 dictionary is licensed, and ASD reserves all rights. It is not in
+this repository. A derived machine-readable copy for our own text checks is in
+the internal repository, folder `70_Meta/ste100/`. Do not copy that file into a
+public repository.
+
+### 14.5 Scope
+
+This section applies to documents that a reader must act on: specifications,
+manuals, contracts, procedures and error catalogues. It does not apply to
+internal working notes or transcripts.
+
+## 15. Open Items
 
 ::: {.unknown owner="Stefan Fölser" due="2026-05-01"}
-Final decision on DID method for anchoring (`did:web` vs `did:key` vs
+Final decision on DID method for anchoring (`did:web`, `did:key` or
 custom RDDL method) and signing-key custody (HSM, cloud KMS, or
 hardware-embedded secure element).
 :::
@@ -357,8 +408,9 @@ Domain registration of `bodenkraft.farm` and `groundup.farm` DID webroots
 (`.well-known/did.json`).
 :::
 
-## 15. Change Log
+## 16. Change Log
 
 | Version | Date | Change |
 |---------|------|--------|
+| 1.0.1-draft | 2026-11-03 | Section 14: writing language ASD-STE100, checker tool |
 | 1.0.0-draft | 2026-04-18 | Initial draft  supersedes implicit LaTeX-only conventions in Ground UP legacy repos |
